@@ -14,9 +14,19 @@ const Login = (props) => {
   //updating React State
   //dependencies are what you using in side effect function and we can omit the state updating function since it insured by React ot never change
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+     const identifier = setTimeout(() => {
+      console.log('checking form validity')
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    
+    }, 500);
+      //cleanup function
+      return () => {
+        console.log('CLEANUP!');
+        clearTimeout(identifier);
+      };
+   
   }, [enteredEmail, enteredPassword]); //we omit setFormIsValid here
 
   const emailChangeHandler = (event) => {
